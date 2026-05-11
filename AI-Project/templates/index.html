@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Detect Text in Image</title>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gray-100 font-sans antialiased">
+  <header class="bg-blue-600 text-white p-4 shadow-md flex items-center justify-center">
+    <img src="{{ url_for('static', filename='favicon.ico') }}" alt="Logo" class="h-8 w-8 mr-2">
+    <span class="text-xl font-bold">Chinese Cuisines Translator</span>
+  </header>
+  <div class="container mx-auto p-4 max-w-2xl bg-white shadow-lg rounded-lg my-8">
+    <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Upload a menu to get started</h1>
+    <form method="post" enctype="multipart/form-data" class="flex flex-col items-center space-y-4">
+      <input type="file" name="file" accept="image/*" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+      <input type="submit" value="Upload and Process" class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 cursor-pointer">
+    </form>
+
+    {% if extracted_text %}
+      <div class="bg-gray-50 p-4 rounded-lg shadow-inner mt-6">
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4">Uploaded Image:</h2>
+        {% if image_filename %}
+          <img src="{{ url_for('static', filename=image_filename) }}" alt="Uploaded Menu" class="mx-auto block max-w-full h-auto rounded-lg shadow-md mb-4">
+        {% endif %}
+
+        <!--<h2>Step 1: Cloud Vision API Extracted Text from Image:</h2>
+        <pre>{{ extracted_text }}</pre>
+      </div>                                                        --->
+    {% endif %}
+
+    {% if dishes is defined %}
+      <div class="bg-gray-50 p-4 rounded-lg shadow-inner mt-6">
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4">Identified Dishes</h2>
+        {% if dishes %}
+          <div id="dish-list" class="space-y-3">
+            {% for dish in dishes %}
+              <div class="flex items-center justify-between p-3 bg-white border border-gray-200 rounded-md shadow-sm">
+                <span class="text-gray-800 font-medium">{{ dish.chinese_name }} &rarr; {{ dish.english_name }}</span>
+                <button onclick="fetchDetails('{{ dish.chinese_name }}', '{{ dish.english_name }}', this)" class="px-4 py-2 w-32 flex-shrink-0 bg-green-500 text-white text-sm font-medium rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 whitespace-nowrap overflow-hidden">Get Details</button>   
+                <!--Change to dish.english_name for search in eng-->
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <p class="text-red-500 text-center mt-4">
+            {{ error if error else "No food items were identified in the image." }}
+          </p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <!-- This div will be the target for our Step 3 content -->
+    <div id="step3-result" class="bg-gray-50 p-4 rounded-lg shadow-inner mt-6" style="display: none;">
+      <div class="flex items-center justify-between gap-3 mb-4">
+        <h2 id="dish-details-title" class="text-2xl font-semibold text-gray-700">Dish Details</h2>
+        <button id="regenerate-button" onclick="regenerateDetails()" class="px-4 py-2 bg-amber-500 text-white text-sm font-medium rounded-md hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-opacity-75" style="display: none;">
+          Regenerate Detail
+        </button>
+      </div>
+      <p id="loading" class="text-gray-600 italic text-center">Fetching details...</p>
+      <div id="dish-details-content" class="bg-white p-6 rounded-lg shadow-md mt-4 space-y-4"></div>
+    </div>
+  </div>
+
+  <script>
+    let currentDishName = '';
+    let currentEnglishName = '';
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function createTagList(items, tagClass) {
+      return items.map(item => `<li class="${tagClass}">${escapeHtml(item)}</li>`).join('');
+    }
+
+    function parseDishDetails(detailsText) {
+      const lines = String(detailsText)
+        .split('\n')
+        .map(line => line.trim())
+        .filter(Boolean);
+
+      const result = {
+        dishName: '',
+        culturalOrigin: '',
+        mainIngredients: [],
+        seasoningIngredients: [],
+        allergenAlerts: [],
+        note: ''
+      };
+
+      let currentSection = '';
+
+      for (const line of lines) {
+        const normalized = line.replace(/:$/, '').trim();
+
+        if (/^Dish Name$/i.test(normalized)) {
+          currentSection = 'dishName';
+          continue;
+        }
+
+        if (/^Cultural Origin$/i.test(normalized)) {
+          currentSection = 'culturalOrigin';
+          continue;
+        }
+
+        if (/^Key Ingredients$/i.test(normalized)) {
+          currentSection = 'keyIngredients';
+          continue;
+        }
+
+        if (/^Allergen Alert$/i.test(normalized)) {
+          currentSection = 'allergenAlert';
+          continue;
+        }
+
+        if (/^Note$/i.test(normalized)) {
+          currentSection = 'note';
+          continue;
+        }
+
+        if (currentSection === 'dishName') {
+          result.dishName = result.dishName ? `${result.dishName} ${line}` : line;
+          continue;
+        }
+
+        if (currentSection === 'culturalOrigin') {
+          result.culturalOrigin = result.culturalOrigin ? `${result.culturalOrigin} ${line}` : line;
+          continue;
+        }
+
+        if (currentSection === 'keyIngredients') {
+          if (/^Main:/i.test(line)) {
+            const mainItems = line.replace(/^Main:\s*/i, '').split(/,\s*/).filter(Boolean);
+            result.mainIngredients.push(...mainItems);
+            continue;
+          }
+
+          if (/^Sauce\/Seasoning:/i.test(line)) {
+            const seasoningItems = line.replace(/^Sauce\/Seasoning:\s*/i, '').split(/,\s*/).filter(Boolean);
+            result.seasoningIngredients.push(...seasoningItems);
+            continue;
+          }
+        }
+
+        if (currentSection === 'allergenAlert') {
+          if (/^Note:/i.test(line)) {
+            result.note = line.replace(/^Note:\s*/i, '').trim();
+            continue;
+          }
+
+          const allergens = line
+            .split(/,\s*/)
+            .map(item => item.replace(/^[-•]\s*/, '').trim())
+            .filter(Boolean);
+          result.allergenAlerts.push(...allergens);
+        }
+      }
+
+      return result;
+    }
+
+    function renderSectionCard(title, bodyHtml, accentClass = '') {
+      return `
+        <section class="rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+          <div class="px-4 py-3 ${accentClass}">
+            <h3 class="text-base font-semibold text-gray-900">${escapeHtml(title)}</h3>
+          </div>
+          <div class="px-4 py-4 text-gray-700 leading-relaxed">${bodyHtml}</div>
+        </section>
+      `;
+    }
+
+    function renderDishDetails(detailsText) {
+      const parsed = parseDishDetails(detailsText);
+      const sections = [];
+
+      if (parsed.dishName) {
+        sections.push(renderSectionCard(
+          'Dish Name',
+          `<p class="text-2xl font-bold text-gray-950">${escapeHtml(parsed.dishName)}</p>`,
+          'bg-slate-50'
+        ));
+      }
+
+      if (parsed.culturalOrigin) {
+        sections.push(renderSectionCard(
+          'Cultural Origin',
+          `<p>${escapeHtml(parsed.culturalOrigin)}</p>`,
+          'bg-blue-50'
+        ));
+      }
+
+      if (parsed.mainIngredients.length || parsed.seasoningIngredients.length) {
+        const mainList = parsed.mainIngredients.length
+          ? `<ul class="mt-2 grid gap-2 sm:grid-cols-2">${createTagList(parsed.mainIngredients, 'rounded-lg bg-emerald-50 px-3 py-2 text-emerald-900 ring-1 ring-emerald-100')}</ul>`
+          : '<p class="text-sm text-gray-500">No main ingredients listed.</p>';
+
+        const seasoningList = parsed.seasoningIngredients.length
+          ? `<ul class="mt-2 grid gap-2 sm:grid-cols-2">${createTagList(parsed.seasoningIngredients, 'rounded-lg bg-amber-50 px-3 py-2 text-amber-900 ring-1 ring-amber-100')}</ul>`
+          : '<p class="text-sm text-gray-500">No seasoning ingredients listed.</p>';
+
+        sections.push(renderSectionCard(
+          'Key Ingredients',
+          `
+            <div class="space-y-4">
+              <div>
+                <p class="text-sm font-semibold uppercase tracking-wide text-gray-500">Main</p>
+                ${mainList}
+              </div>
+              <div>
+                <p class="text-sm font-semibold uppercase tracking-wide text-gray-500">Sauce / Seasoning</p>
+                ${seasoningList}
+              </div>
+            </div>
+          `,
+          'bg-emerald-50'
+        ));
+      }
+
+      if (parsed.allergenAlerts.length || parsed.note) {
+        const allergenList = parsed.allergenAlerts.length
+          ? `<ul class="mt-2 space-y-2">${parsed.allergenAlerts.map(item => `<li class="rounded-lg bg-red-50 px-3 py-2 text-red-800 ring-1 ring-red-100">${escapeHtml(item)}</li>`).join('')}</ul>`
+          : '<p class="text-sm text-gray-500">No allergens listed.</p>';
+
+        const noteBlock = parsed.note
+          ? `<div class="mt-4 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900"><span class="font-semibold">Note:</span> ${escapeHtml(parsed.note)}</div>`
+          : '';
+
+        sections.push(renderSectionCard(
+          'Allergen Alert',
+          `${allergenList}${noteBlock}`,
+          'bg-red-50'
+        ));
+      }
+
+      return sections.join('');
+    }
+
+    function setSelectedDishButton(buttonElement, text, className) {
+      if (!buttonElement) {
+        return;
+      }
+
+      buttonElement.textContent = text;
+      buttonElement.className = className;
+    }
+
+    function fetchDetails(dishName, englishName, buttonElement, forceRefresh = false) {
+      const step3ResultDiv = document.getElementById('step3-result');
+      const loadingP = document.getElementById('loading');
+      const dishDetailsContentDiv = document.getElementById('dish-details-content');
+      const dishDetailsTitle = document.getElementById('dish-details-title');
+      const regenerateButton = document.getElementById('regenerate-button');
+      const selectedButton = buttonElement || null;
+
+      currentDishName = dishName;
+      currentEnglishName = englishName;
+
+      setSelectedDishButton(
+        selectedButton,
+        'Loading...',
+        'px-4 py-2 w-32 flex-shrink-0 bg-blue-500 text-white text-sm font-medium rounded-md cursor-wait focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 whitespace-nowrap overflow-hidden'
+      );
+
+      dishDetailsTitle.innerHTML = `${dishName} &rarr; ${englishName}`;
+      regenerateButton.style.display = 'inline-flex';
+      regenerateButton.disabled = true;
+
+      // Show loading state
+      step3ResultDiv.style.display = 'block';
+      loadingP.style.display = 'block';
+      dishDetailsContentDiv.style.display = 'none'; // Hide content until loaded
+
+      fetch('/get_dish_details', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ dish_name: dishName, force_refresh: forceRefresh }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        loadingP.style.display = 'none';
+        regenerateButton.disabled = false;
+        dishDetailsContentDiv.innerHTML = ''; // Clear previous content
+
+        if (data.details) {
+          dishDetailsContentDiv.innerHTML = renderDishDetails(data.details);
+          dishDetailsContentDiv.style.display = 'block';
+          setSelectedDishButton(
+            selectedButton,
+            'Show details',
+            'px-4 py-2 w-32 flex-shrink-0 bg-blue-500 text-white text-sm font-medium rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 whitespace-nowrap overflow-hidden'
+          );
+        } else {
+          dishDetailsContentDiv.innerHTML = '<p class="text-red-500 text-center">Could not retrieve details for this dish.</p>';
+          dishDetailsContentDiv.style.display = 'block';
+          setSelectedDishButton(
+            selectedButton,
+            'Get Details',
+            'px-4 py-2 w-32 flex-shrink-0 bg-green-500 text-white text-sm font-medium rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 whitespace-nowrap overflow-hidden'
+          );
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching dish details:', error);
+        loadingP.style.display = 'none';
+        regenerateButton.disabled = false;
+        dishDetailsContentDiv.innerHTML = '<p class="text-red-500 text-center">Error fetching details. Please check the console.</p>';
+        dishDetailsContentDiv.style.display = 'block';
+        setSelectedDishButton(
+          selectedButton,
+          'Get Details',
+          'px-4 py-2 w-32 flex-shrink-0 bg-green-500 text-white text-sm font-medium rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 whitespace-nowrap overflow-hidden'
+        );
+      });
+    }
+
+    function regenerateDetails() {
+      if (!currentDishName) {
+        return;
+      }
+
+      fetchDetails(currentDishName, currentEnglishName, null, true);
+    }
+  </script>
+</body>
+</html>

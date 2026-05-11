@@ -1,0 +1,51 @@
+input,actual,predicted,is_correct
+红烧茄子,Braised Eggplant,Braised Eggplant,True
+麻辣香锅,Spicy Dry Pot,Sichuan Spicy Wok,False
+鱼香茄子,Fish-Flavored Eggplant,Fish-Flavored Eggplant,True
+清炒西兰花,Stir-Fried Broccoli,Stir-Fried Broccoli,True
+蒸鸡蛋羹,Steamed Egg Custard,Steamed Egg Custard,True
+蚂蚁上树,Ants Climbing a Tree,Sautéed Cellophane Noodles with Minced Pork,True
+口水鸡,Mouthwatering Chicken,Sichuan Saliva Chicken,True
+北京烤鸭,Peking Duck,Peking Duck,True
+鱼香肉末豆腐,Fish-Flavored Tofu with Minced Pork,Yuxiang Minced Pork Tofu,True
+宫保虾球,Kung Pao Shrimp,Kung Pao Shrimp Balls,True
+清蒸鲈鱼,Steamed Sea Bass,Steamed Sea Bass,True
+糖醋里脊,Sweet and Sour Pork Tenderloin,Sweet and Sour Spare Ribs,False
+回锅肉,Twice-Cooked Pork,Double-Cooked Pork,False
+蒜蓉粉丝蒸扇贝,Steamed Scallops with Garlic and Glass Noodles,Steamed Scallops with Minced Garlic and Vermicelli,False
+酸菜鱼,Fish with Pickled Mustard Greens,Pickled Cabbage Fish,True
+剁椒蒸鱼头,Steamed Fish Head with Chopped Chili,Steamed Fish Head with Chopped Pepper,True
+土豆烧牛肉,Braised Beef with Potatoes,Beef With Potatoes,False
+西红柿炒鸡蛋,Scrambled Eggs with Tomatoes,Stir-Fried Tomatoes and Eggs,True
+青椒土豆丝,Shredded Potatoes with Green Pepper,Green Pepper and Potato Threads,True
+干煸四季豆,Dry-Fried Green Beans,Sautéed Green Beans With Minced Pork,False
+蚝油生菜,Lettuce with Oyster Sauce,Oyster Sauce Lettuce,True
+三杯鸡,Three-Cup Chicken,Three Cup Chicken,True
+葱爆羊肉,Scallion Lamb Stir-Fry,Stir-Fried Lamb with Scallions,False
+水煮鱼,Boiled Fish in Chili Oil,Sichuan Boiled Fish,True
+水煮牛肉,Boiled Beef in Chili Oil,Sautéed Sliced Beef In Hot Pepper Sauce,False
+干锅花菜,Dry-Pot Cauliflower,Sautéed Cauliflower with Pepper in Iron Wok,False
+莲藕排骨汤,Lotus Root and Pork Rib Soup,Lotus Root and Pork Rib Soup,True
+竹笋炒肉,Stir-Fried Pork with Bamboo Shoots,Stir-Fried Pork with Bamboo Shoots,True
+腊肉炒蒜苗,Stir-Fried Cured Pork with Garlic Sprouts,Stir-Fried Bacon with Garlic Sprouts,True
+香菇滑鸡,Chicken with Mushrooms,Claypot Chicken With Shiitake Mushrooms,False
+清炒虾仁,Stir-Fried Shrimp,Stir-Fried Shrimp,True
+椒盐虾,Salt and Pepper Shrimp,Salt and Pepper Shrimp,True
+蒸排骨,Steamed Pork Ribs,Steamed Pork Ribs,True
+酱爆鸡丁,Stir-Fried Chicken Cubes in Sauce,Stir-Fried Chicken Cubes with Brown Bean Sauce,True
+芹菜炒香干,Stir-Fried Celery with Dried Tofu,Stir-Fried Celery with Smoked Tofu,True
+麻婆豆腐盖饭,Mapo Tofu Rice Bowl,Mapo Tofu Rice Bowl,True
+砂锅鱼头豆腐,Fish Head and Tofu Clay Pot,ERROR,False
+椒麻鸡,Spicy Sichuan Pepper Chicken,Sichuan Pepper Chicken,True
+四喜丸子,Four Happiness Meatballs,Braised Pork Ball In Brown Sauce,True
+木须肉,Moo Shu Pork,Moo Shu Pork,True
+青菜豆腐汤,Leafy Greens and Tofu Soup,Vegetable and Tofu Soup,True
+炸酱面,Noodles with Soybean Paste Sauce,Zhajiangmian,True
+云吞面,Wonton Noodles,Wonton Noodle,True
+虾仁炒饭,Shrimp Fried Rice,Shrimp Fried Rice,True
+腌笃鲜,Salted Pork and Bamboo Shoot Soup,Smoked Ham and Fresh Pork Soup,True
+梅菜蒸鱼,Steamed Fish with Preserved Mustard Greens,Steamed Fish with Preserved Vegetables,True
+麻辣豆腐,Spicy Tofu,Sichuan Spicy Tofu,True
+糖醋鱼,Sweet and Sour Fish,Sweet and Sour Fish,True
+白切鸡,Poached Chicken,Sliced White Cut Chicken,True
+葱油拌面,Noodles with Scallion Oil,Scallion Oil Noodles,True

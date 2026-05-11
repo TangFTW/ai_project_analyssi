@@ -1,0 +1,50 @@
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n红烧茄子"}]}]}, "ground_truth": "Braised Eggplant"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n麻辣香锅"}]}]}, "ground_truth": "Spicy Dry Pot"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n鱼香茄子"}]}]}, "ground_truth": "Fish-Flavored Eggplant"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n清炒西兰花"}]}]}, "ground_truth": "Stir-Fried Broccoli"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n蒸鸡蛋羹"}]}]}, "ground_truth": "Steamed Egg Custard"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n蚂蚁上树"}]}]}, "ground_truth": "Ants Climbing a Tree"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n口水鸡"}]}]}, "ground_truth": "Mouthwatering Chicken"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n北京烤鸭"}]}]}, "ground_truth": "Peking Duck"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n鱼香肉末豆腐"}]}]}, "ground_truth": "Fish-Flavored Tofu with Minced Pork"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n宫保虾球"}]}]}, "ground_truth": "Kung Pao Shrimp"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n清蒸鲈鱼"}]}]}, "ground_truth": "Steamed Sea Bass"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n糖醋里脊"}]}]}, "ground_truth": "Sweet and Sour Pork Tenderloin"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n回锅肉"}]}]}, "ground_truth": "Twice-Cooked Pork"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n蒜蓉粉丝蒸扇贝"}]}]}, "ground_truth": "Steamed Scallops with Garlic and Glass Noodles"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n酸菜鱼"}]}]}, "ground_truth": "Fish with Pickled Mustard Greens"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n剁椒蒸鱼头"}]}]}, "ground_truth": "Steamed Fish Head with Chopped Chili"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n土豆烧牛肉"}]}]}, "ground_truth": "Braised Beef with Potatoes"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n西红柿炒鸡蛋"}]}]}, "ground_truth": "Scrambled Eggs with Tomatoes"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n青椒土豆丝"}]}]}, "ground_truth": "Shredded Potatoes with Green Pepper"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n干煸四季豆"}]}]}, "ground_truth": "Dry-Fried Green Beans"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n蚝油生菜"}]}]}, "ground_truth": "Lettuce with Oyster Sauce"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n三杯鸡"}]}]}, "ground_truth": "Three-Cup Chicken"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n葱爆羊肉"}]}]}, "ground_truth": "Scallion Lamb Stir-Fry"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n水煮鱼"}]}]}, "ground_truth": "Boiled Fish in Chili Oil"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n水煮牛肉"}]}]}, "ground_truth": "Boiled Beef in Chili Oil"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n干锅花菜"}]}]}, "ground_truth": "Dry-Pot Cauliflower"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n莲藕排骨汤"}]}]}, "ground_truth": "Lotus Root and Pork Rib Soup"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n竹笋炒肉"}]}]}, "ground_truth": "Stir-Fried Pork with Bamboo Shoots"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n腊肉炒蒜苗"}]}]}, "ground_truth": "Stir-Fried Cured Pork with Garlic Sprouts"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n香菇滑鸡"}]}]}, "ground_truth": "Chicken with Mushrooms"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n清炒虾仁"}]}]}, "ground_truth": "Stir-Fried Shrimp"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n椒盐虾"}]}]}, "ground_truth": "Salt and Pepper Shrimp"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n蒸排骨"}]}]}, "ground_truth": "Steamed Pork Ribs"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n酱爆鸡丁"}]}]}, "ground_truth": "Stir-Fried Chicken Cubes in Sauce"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n芹菜炒香干"}]}]}, "ground_truth": "Stir-Fried Celery with Dried Tofu"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n麻婆豆腐盖饭"}]}]}, "ground_truth": "Mapo Tofu Rice Bowl"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n砂锅鱼头豆腐"}]}]}, "ground_truth": "Fish Head and Tofu Clay Pot"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n椒麻鸡"}]}]}, "ground_truth": "Spicy Sichuan Pepper Chicken"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n四喜丸子"}]}]}, "ground_truth": "Four Happiness Meatballs"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n木须肉"}]}]}, "ground_truth": "Moo Shu Pork"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n青菜豆腐汤"}]}]}, "ground_truth": "Leafy Greens and Tofu Soup"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n炸酱面"}]}]}, "ground_truth": "Noodles with Soybean Paste Sauce"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n云吞面"}]}]}, "ground_truth": "Wonton Noodles"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n虾仁炒饭"}]}]}, "ground_truth": "Shrimp Fried Rice"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n腌笃鲜"}]}]}, "ground_truth": "Salted Pork and Bamboo Shoot Soup"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n梅菜蒸鱼"}]}]}, "ground_truth": "Steamed Fish with Preserved Mustard Greens"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n麻辣豆腐"}]}]}, "ground_truth": "Spicy Tofu"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n糖醋鱼"}]}]}, "ground_truth": "Sweet and Sour Fish"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n白切鸡"}]}]}, "ground_truth": "Poached Chicken"}
+{"request": {"contents": [{"role": "user", "parts": [{"text": "Translate to English:\n葱油拌面"}]}]}, "ground_truth": "Noodles with Scallion Oil"}
